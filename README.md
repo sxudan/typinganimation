@@ -96,8 +96,10 @@ typingAnimation.start();
 
 ### Demo
 
+https://github.com/user-attachments/assets/2b5a1525-9019-404d-a62c-e719a0201950
 
-https://github.com/user-attachments/assets/e27736fe-968a-4a00-a9b1-10c62e7ce94c
+
+
 
 
 
