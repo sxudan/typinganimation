@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Animation</title>
+</head>
+<body>
+    <!-- The code container will be dynamically created and styled by the library -->
+    
+    <!-- Include the typing animation library -->
+    <script src="../dist/TypingAnimation.js"></script>
+
+    <script>
+        // The text to be animated
+        const codeText = `body {
+    background-color: #282c34;
+    color: #abb2bf;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+} 
+`;
+
+        // Create a container element where the animation will appear
+        const codeContainer = document.createElement('div');
+        codeContainer.classList.add('code-container');
+        document.body.appendChild(codeContainer);
+
+        // Initialize and start the typing animation
+        const typing = new TypingAnimation(codeContainer, codeText);
+        typing.start();
+        window.typing = typing;
+    </script>
+</body>
+</html>

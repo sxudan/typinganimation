@@ -1,0 +1,49 @@
+{
+    "name": "typing-animation",
+    "version": "1.0.0",
+    "description": "A library for creating typing animation effects in the browser with support for pausing, stopping, and changing themes.",
+    "main": "dist/typing-animation.js",
+    "types": "dist/types.d.ts",
+    "scripts": {
+      "build": "tsc",
+      "dev": "tsc --watch",
+      "test": "echo \"No tests specified\" && exit 0",
+      "lint": "eslint src --ext .ts",
+      "prepublishOnly": "npm run build"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/your-username/typing-animation.git"
+    },
+    "keywords": [
+      "typing",
+      "animation",
+      "typing-animation",
+      "text-effect",
+      "cursor",
+      "pause",
+      "stop",
+      "play"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "devDependencies": {
+      "typescript": "^4.5.0",
+      "eslint": "^7.32.0",
+      "eslint-plugin-import": "^2.24.0"
+    },
+    "dependencies": {},
+    "peerDependencies": {
+      "typescript": "^4.5.0"
+    },
+    "files": [
+      "dist",
+      "src",
+      "types.d.ts"
+    ],
+    "homepage": "https://github.com/your-username/typing-animation",
+    "bugs": {
+      "url": "https://github.com/your-username/typing-animation/issues"
+    }
+  }
+  
