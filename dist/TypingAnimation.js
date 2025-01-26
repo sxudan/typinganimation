@@ -7,7 +7,10 @@
             comment: "#7f848e",
             background: "#1e1e1e",
             text: "#abb2bf",
-            cursor: "#ffffff", // White cursor color
+            cursor: "#ffffff",
+            property: '#56b6c2',
+            value: '#98c379',
+            symbol: '#e06c75',
         },
         light: {
             keyword: "#0000FF",
@@ -15,7 +18,10 @@
             comment: "#808080",
             background: "#FFFFFF",
             text: "#000000",
-            cursor: "#000000", // Black cursor
+            cursor: "#000000",
+            property: '#56b6c2',
+            value: '#98c379',
+            symbol: '#e06c75',
         },
         dark: {
             keyword: "#ff79c6",
@@ -23,7 +29,10 @@
             comment: "#f8f8f2",
             background: "#282a36",
             text: "#f8f8f2",
-            cursor: "#ffffff", // White cursor
+            cursor: "#ffffff",
+            property: '#56b6c2',
+            value: '#98c379',
+            symbol: '#e06c75',
         },
     };
     class TypingAnimation {
@@ -69,6 +78,10 @@
                     0% { opacity: 1; }
                     100% { opacity: 0; }
                 }
+                .keyword { color: ${this.theme.keyword}; }
+                .property { color: ${this.theme.property}; }
+                .value { color: ${this.theme.value}; }
+                .symbol { color: ${this.theme.symbol} }
             `;
             document.head.appendChild(style);
         }
@@ -101,8 +114,16 @@
             if (this.isPaused)
                 return;
             if (this.index < this.text.length) {
-                const currentChar = this.text[this.index];
-                this.element.innerHTML += currentChar; // Add character without syntax highlighting
+                let char = this.text[this.index];
+                if (char === "\n") {
+                    this.element.innerHTML += "<br>";
+                }
+                else if (char === " ") {
+                    this.element.innerHTML += "&nbsp;";
+                }
+                else {
+                    this.element.innerHTML = this.highlightCode(this.element.innerText + char);
+                }
                 this.index++;
                 this.timeoutId = setTimeout(() => this.typeCode(), this.typingSpeed);
             }
@@ -122,6 +143,13 @@
             if (this.cursorElement) {
                 this.cursorElement.style.animation = `blink ${this.cursorSpeed}ms infinite alternate`;
             }
+        }
+        highlightCode(text) {
+            return text
+                .replace(/(body|display|justify-content|align-items|height|margin|color|background-color|font-family)/g, '<span class="property">$1</span>')
+                .replace(/(:|;|\{|\})/g, '<span class="symbol">$1</span>')
+                .replace(/(#\w{6})/g, '<span class="value">$1</span>')
+                .replace(/('Courier New', monospace)/g, '<span class="value">$1</span>');
         }
     }
     // Expose TypingAnimation class to global scope

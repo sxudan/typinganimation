@@ -7,6 +7,9 @@
     background: string;
     text: string;
     cursor: string;
+    property: string;
+    value: string;
+    symbol: string;
   };
 
   const theme: { [key: string]: Theme } = {
@@ -17,6 +20,9 @@
       background: "#1e1e1e", // Dark background for the code container
       text: "#abb2bf", // Light gray text color
       cursor: "#ffffff", // White cursor color
+      property: '#56b6c2',
+      value: '#98c379',
+      symbol: '#e06c75',
     },
     light: {
       keyword: "#0000FF", // Blue for keywords
@@ -25,6 +31,9 @@
       background: "#FFFFFF", // White background
       text: "#000000", // Black text
       cursor: "#000000", // Black cursor
+      property: '#56b6c2',
+      value: '#98c379',
+      symbol: '#e06c75',
     },
     dark: {
       keyword: "#ff79c6", // Pink for keywords
@@ -33,6 +42,9 @@
       background: "#282a36", // Dark background for code container
       text: "#f8f8f2", // Light text
       cursor: "#ffffff", // White cursor
+      property: '#56b6c2',
+      value: '#98c379',
+      symbol: '#e06c75',
     },
   };
 
@@ -99,6 +111,10 @@
                     0% { opacity: 1; }
                     100% { opacity: 0; }
                 }
+                .keyword { color: ${this.theme.keyword}; }
+                .property { color: ${this.theme.property}; }
+                .value { color: ${this.theme.value}; }
+                .symbol { color: ${this.theme.symbol} }
             `;
       document.head.appendChild(style);
     }
@@ -129,21 +145,26 @@
     }
 
     // Function to handle the typing animation logic
-    private typeCode(): void {
+    private typeCode() {
       if (this.isStopped) return;
       if (this.isPaused) return;
-
       if (this.index < this.text.length) {
-        const currentChar = this.text[this.index];
-        this.element.innerHTML += currentChar; // Add character without syntax highlighting
+        let char = this.text[this.index];
+        if (char === "\n") {
+          this.element.innerHTML += "<br>";
+        } else if (char === " ") {
+          this.element.innerHTML += "&nbsp;";
+        } else {
+          this.element.innerHTML = this.highlightCode(
+            this.element.innerText + char
+          );
+        }
         this.index++;
-
         this.timeoutId = setTimeout(() => this.typeCode(), this.typingSpeed);
       } else {
         this.addCursor();
       }
     }
-
     // Function to add a cursor after typing is done
     private addCursor(): void {
       this.cursorElement = document.createElement("span");
@@ -157,6 +178,20 @@
       if (this.cursorElement) {
         this.cursorElement.style.animation = `blink ${this.cursorSpeed}ms infinite alternate`;
       }
+    }
+
+    highlightCode(text: string) {
+      return text
+        .replace(
+          /(body|display|justify-content|align-items|height|margin|color|background-color|font-family)/g,
+          '<span class="property">$1</span>'
+        )
+        .replace(/(:|;|\{|\})/g, '<span class="symbol">$1</span>')
+        .replace(/(#\w{6})/g, '<span class="value">$1</span>')
+        .replace(
+          /('Courier New', monospace)/g,
+          '<span class="value">$1</span>'
+        );
     }
   }
 
