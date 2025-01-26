@@ -99,7 +99,7 @@ typingAnimation.start();
 
 https://github.com/user-attachments/assets/2b5a1525-9019-404d-a62c-e719a0201950
 
-
+[Demo Website](https://sxudan.github.io/typinganimation/example/index.html)
 
 
 
