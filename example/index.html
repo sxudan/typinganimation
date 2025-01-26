@@ -30,9 +30,7 @@ body {
 
         // Create a container element where the animation will appear
         const codeContainer = document.createElement('div');
-        // codeContainer.classList.add('code-container');
         document.body.appendChild(codeContainer);
-
         // Initialize and start the typing animation
         const typing = new TypingAnimation({ element: codeContainer, text: codeText });
         typing.start();
