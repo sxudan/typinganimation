@@ -100,7 +100,11 @@ typingAnimation.start();
 ```
 
 ### Demo
-https://sxudan.github.io/typinganimation/demo-video.mp4
+
+
+https://github.com/user-attachments/assets/e27736fe-968a-4a00-a9b1-10c62e7ce94c
+
+
 
 ### License
 This project is open-source and available under the MIT License.
