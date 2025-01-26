@@ -21,48 +21,45 @@ Here's an example of how to use the TypingAnimation class in your HTML file.
 ```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Typing Animation Example</title>
-  <style>
-    /* You can style the container as needed */
-    .code-container {
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      width: 600px;
-      white-space: pre;
-      overflow: hidden;
-      color: #abb2bf;
-      font-family: 'Courier New', monospace;
-      font-size: 16px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Animation</title>
 </head>
+
 <body>
-  <!-- Create a container for the typing animation -->
-  <div id="codeContainer" class="code-container"></div>
+    <!-- The code container will be dynamically created and styled by the library -->
 
-  <!-- Include TypingAnimation.js from the CDN -->
-  <script src="https://sxudan.github.io/typinganimation/dist/TypingAnimation.js"></script>
+    <!-- Include the typing animation library -->
+    <script src="../dist/TypingAnimation.js"></script>
 
-  <script>
-    // Create a new TypingAnimation instance
-    const codeText = `const greet = () => {
-      console.log("Hello, World!");
-    };
-    
-    greet();`;
+    <script>
+        // The text to be animated
+        const codeText = `
+body {
+    background-color: #282c34;
+    color: #abb2bf;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+} 
+`;
 
-    const element = document.getElementById('codeContainer');
+    // Create a container element where the animation will appear
+    const codeContainer = document.createElement('div');
+    codeContainer.classList.add('code-container');
+    document.body.appendChild(codeContainer);
 
-    const typingAnimation = new TypingAnimation(element, codeText, 100, 500, 'dark');
-
-    // Start the typing animation
-    typingAnimation.start();
-  </script>
+    // Initialize and start the typing animation
+    const typing = new TypingAnimation(codeContainer, codeText);
+    typing.start();
+</script>
 </body>
+
 </html>
 ```
 
