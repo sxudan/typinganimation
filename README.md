@@ -67,6 +67,7 @@ body {
 - **typingSpeed (number)**: The typing speed (in milliseconds). Default is 50ms.
 - **cursorSpeed (number)**: The cursor blink speed (in milliseconds). Default is 600ms.
 - **themeName (string)**: The theme for the animation. Can be 'default', 'light', or 'dark'. Default is 'default'.
+- **width (number)**: The width of the container.
 
 ### Methods
 - start(): Starts the typing animation.

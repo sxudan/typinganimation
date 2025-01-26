@@ -36,7 +36,8 @@
         },
     };
     class TypingAnimation {
-        constructor({ element, text, typingSpeed = 50, cursorSpeed = 600, themeName = "default", showMacHeader = true, }) {
+        constructor({ element, text, typingSpeed = 50, cursorSpeed = 600, themeName = "default", showMacHeader = true, width = 600, }) {
+            this.width = width;
             this.element = element;
             this.element.classList.add("container");
             this.text = text;
@@ -81,7 +82,7 @@
             style.innerHTML = `
                 .container {
                   background-color: ${this.theme.background};
-                  width: 600px;
+                  width: ${this.width}px;
                   border-radius: 16px;
                   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
                   overflow: hidden;
