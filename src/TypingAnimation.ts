@@ -56,6 +56,9 @@
     themeName: keyof typeof theme;
     showMacHeader?: boolean;
     width?: number;
+    highlight?: boolean;
+    extraHeightOffset?: number;
+    fixedHeight?: boolean;
   };
 
   class TypingAnimation {
@@ -71,6 +74,9 @@
     private timeoutId: number | null;
     private theme: Theme;
     private width: number;
+    private highlight: boolean;
+    private contentHeight: number;
+    private extraHeightOffset: number;
 
     constructor({
       element,
@@ -80,8 +86,12 @@
       themeName = "default",
       showMacHeader = true,
       width = 600,
+      highlight = true,
+      extraHeightOffset = 50,
+      fixedHeight = true,
     }: Props) {
       this.width = width;
+      this.highlight = highlight;
       this.element = element;
       this.element.classList.add("container");
       this.text = text;
@@ -92,6 +102,7 @@
       this.isPaused = false;
       this.isStopped = false;
       this.timeoutId = null;
+      this.extraHeightOffset = extraHeightOffset;
 
       // Use the specified theme or fallback to default
       this.theme = theme[themeName] || theme.default;
@@ -102,6 +113,16 @@
       this.container = document.createElement("div");
       this.container.classList.add("code-container");
       this.element.appendChild(this.container);
+      // temp
+      if (fixedHeight) {
+        const temporary = document.createElement("div");
+        temporary.innerText = text;
+        this.element.appendChild(temporary);
+        this.contentHeight = temporary.clientHeight;
+        temporary.style.display = "none";
+      } else {
+        this.contentHeight = 0;
+      }
       // Inject default styles for .code-container and .cursor
       this.injectStyles();
     }
@@ -170,6 +191,11 @@
                     color: ${this.theme.text};
                     font-family: 'Courier New', monospace;
                     font-size: 16px;
+                    height: ${
+                      this.contentHeight
+                        ? this.contentHeight + this.extraHeightOffset + "px"
+                        : "auto"
+                    };
                 }
                 .cursor {
                     display: inline-block;
@@ -226,9 +252,13 @@
         } else if (char === " ") {
           this.container.innerHTML += "&nbsp;";
         } else {
-          this.container.innerHTML = this.highlightCode(
-            this.container.innerText + char
-          );
+          if (this.highlight) {
+            this.container.innerHTML = this.highlightCode(
+              this.container.innerText + char
+            );
+          } else {
+            this.container.innerHTML += char;
+          }
         }
         this.index++;
         this.timeoutId = setTimeout(() => this.typeCode(), this.typingSpeed);
@@ -252,17 +282,32 @@
     }
 
     highlightCode(text: string) {
-      return text
-        .replace(
-          /(body|display|justify-content|align-items|height|margin|color|background-color|font-family)/g,
-          '<span class="property">$1</span>'
-        )
-        .replace(/(:|;|\{|\})/g, '<span class="symbol">$1</span>')
-        .replace(/(#\w{6})/g, '<span class="value">$1</span>')
-        .replace(
-          /('Courier New', monospace)/g,
-          '<span class="value">$1</span>'
-        );
+      text = text.replace(/</g, "___+++___").replace(/>/g, "___%%%___");
+      return (
+        text
+          // 🔹 Highlight JavaScript keywords FIRST
+          .replace(
+            /\b(function|const|let|var|if|else|return|for|while|switch|case|break|continue|default|class|extends|new|try|catch|throw|typeof|instanceof|import|export|await|async)\b/g,
+            '<span class="keyword">$1</span>'
+          )
+          // 🔹 Highlight CSS properties
+          .replace(
+            /(body|position|overflow|background|font-size|border-radius|border|cursor|outline|opacity|transform|animation|pointer-events|padding|margin|border-radius|display|justify-content|align-items|height|margin|color|background-color|font-family)/g,
+            '<span class="property">$1</span>'
+          )
+          // 🔹 Highlight hex color values
+          .replace(/(#\w{6})/g, '<span class="value">$1</span>')
+          // 🔹 Highlight font-family values
+          .replace(
+            /('Courier New', monospace)/g,
+            '<span class="value">$1</span>'
+          )
+          // 🔹 Highlight symbols LAST to avoid breaking keywords
+          .replace(/(:|;|\{|\})/g, '<span class="symbol">$1</span>')
+          .replace(/___\+\+\+___/g, "&lt;")
+          .replace(/___%%%___/g, "&gt;")
+      );
+      // 🔹 Highlight symbols ONLY if they are NOT inside quotes
     }
   }
 
