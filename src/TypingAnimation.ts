@@ -292,7 +292,7 @@
           )
           // 🔹 Highlight CSS properties
           .replace(
-            /(body|position|overflow|background|font-size|border-radius|border|cursor|outline|opacity|transform|animation|pointer-events|padding|margin|border-radius|display|justify-content|align-items|height|margin|color|background-color|font-family)/g,
+            /(body|position|overflow|background|font-size|border-radius|border|cursor|outline|opacity|transform|animation|pointer-events|padding|margin|border-radius|display|justify-content|align-items|height|color|background-color|font-family)/g,
             '<span class="property">$1</span>'
           )
           // 🔹 Highlight hex color values

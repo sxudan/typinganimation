@@ -135,7 +135,9 @@
                     color: ${this.theme.text};
                     font-family: 'Courier New', monospace;
                     font-size: 16px;
-                    height: ${this.contentHeight ? ((this.contentHeight + this.extraHeightOffset) + "px") : "auto"};
+                    height: ${this.contentHeight
+                ? this.contentHeight + this.extraHeightOffset + "px"
+                : "auto"};
                 }
                 .cursor {
                     display: inline-block;
@@ -225,7 +227,7 @@
                 // 🔹 Highlight JavaScript keywords FIRST
                 .replace(/\b(function|const|let|var|if|else|return|for|while|switch|case|break|continue|default|class|extends|new|try|catch|throw|typeof|instanceof|import|export|await|async)\b/g, '<span class="keyword">$1</span>')
                 // 🔹 Highlight CSS properties
-                .replace(/(body|position|overflow|background|font-size|border-radius|border|cursor|outline|opacity|transform|animation|pointer-events|padding|margin|border-radius|display|justify-content|align-items|height|margin|color|background-color|font-family)/g, '<span class="property">$1</span>')
+                .replace(/(body|position|overflow|background|font-size|border-radius|border|cursor|outline|opacity|transform|animation|pointer-events|padding|margin|border-radius|display|justify-content|align-items|height|color|background-color|font-family)/g, '<span class="property">$1</span>')
                 // 🔹 Highlight hex color values
                 .replace(/(#\w{6})/g, '<span class="value">$1</span>')
                 // 🔹 Highlight font-family values
